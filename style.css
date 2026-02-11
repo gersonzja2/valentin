@@ -185,3 +185,33 @@ button:hover {
     animation: none; /* Quitamos la animación de pulso del botón principal */
     z-index: 1001;
 }
+
+#anniversary-countdown {
+    margin-top: 25px;
+    font-size: 1em;
+    color: #666;
+    font-weight: 500;
+}
+
+#anniversary-countdown strong {
+    color: #e91e63;
+    font-size: 1.2em;
+}
+
+/* --- Estilos para las chispas/estrellas del ratón --- */
+.sparkle {
+    position: fixed; /* Usamos fixed para que se posicione relativo a la ventana */
+    pointer-events: none; /* Para que no interfiera con otros clics */
+    z-index: 9999;
+    opacity: 1;
+    /* La transición se encargará de la animación de salida */
+    transition: transform 1s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 1s linear;
+}
+
+.sparkle::before {
+    content: '✨'; /* Puedes cambiarlo por '⭐', '💖', '🌸' etc. */
+    font-size: 20px;
+    color: #ffd700;
+    text-shadow: 0 0 5px #fff, 0 0 10px #ffd700, 0 0 15px #ffc400;
+    display: block;
+}

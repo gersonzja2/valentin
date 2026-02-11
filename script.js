@@ -92,3 +92,74 @@ function createHeart() {
         heart.remove();
     }, duration * 1000);
 }
+
+// --- Cuenta regresiva para el próximo aniversario ---
+const anniversaryMonth = 10; // Noviembre (0-11), igual que tu startDate
+const anniversaryDay = 1;   // Igual que tu startDate
+
+function setupAnniversaryCountdown() {
+    const now = new Date();
+    let anniversaryYear = now.getFullYear();
+    let anniversaryDate = new Date(anniversaryYear, anniversaryMonth, anniversaryDay);
+
+    // Si la fecha de aniversario de este año ya pasó, calcula para el próximo año
+    if (now > anniversaryDate) {
+        anniversaryYear++;
+        anniversaryDate = new Date(anniversaryYear, anniversaryMonth, anniversaryDay);
+    }
+
+    const countdownElement = document.getElementById('anniversary-countdown');
+    if (!countdownElement) return; // No hacer nada si el elemento no existe
+
+    function updateCountdown() {
+        const today = new Date();
+        const diff = anniversaryDate - today;
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        countdownElement.innerHTML = `Tiempo para nuestro próximo aniversario: <br> <strong>${d}d ${h}h ${m}m ${s}s</strong>`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // Llamada inicial para que no espere 1 segundo
+}
+
+// Iniciar la cuenta regresiva cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', setupAnniversaryCountdown);
+
+// --- Efecto de chispas/estrellas al mover el ratón ---
+function createSparkle(x, y) {
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('sparkle');
+    
+    // Posición inicial en el cursor
+    sparkle.style.left = x + 'px';
+    sparkle.style.top = y + 'px';
+    
+    // Movimiento aleatorio para un efecto más natural
+    const randomX = (Math.random() - 0.5) * 60;
+    const randomY = (Math.random() - 0.5) * 60;
+    
+    // Aplicamos el movimiento en el siguiente frame para que la transición funcione
+    requestAnimationFrame(() => {
+        sparkle.style.transform = `translate(${randomX}px, ${randomY}px) rotate(360deg)`;
+        sparkle.style.opacity = 0;
+    });
+    
+    document.body.appendChild(sparkle);
+
+    // Eliminar la chispa después de la animación (1000ms = 1s)
+    setTimeout(() => {
+        sparkle.remove();
+    }, 1000);
+}
+
+// Para no sobrecargar el navegador, creamos chispas solo de vez en cuando
+document.addEventListener('mousemove', (e) => {
+    if (Math.random() > 0.75) { // Crea una chispa el 25% de las veces
+        createSparkle(e.clientX, e.clientY);
+    }
+});
