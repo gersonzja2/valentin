@@ -38,7 +38,8 @@ body {
 .couple-photo {
     width: 100%;
     max-width: 320px;
-    height: auto;
+    height: 420px; /* Altura fija para que el marco no cambie de tamaño */
+    object-fit: contain; /* Muestra la imagen completa, añadiendo espacios si es necesario */
     border-radius: 15px;
     border: 8px solid white; /* Marco más grueso estilo fotografía */
     box-shadow: 0 15px 35px rgba(0,0,0,0.15); /* Sombra más suave y difusa */
